@@ -1,0 +1,15 @@
+# large or derived data: never committed
+data/
+results/
+work/
+.nextflow/
+.nextflow.log*
+*.fastq
+*.fastq.gz
+*.fq.gz
+*.qza
+*.qzv
+# working documents stay on OneDrive until project close
+HANDOVER.md
+PROJECT_STATE.md
+*Plan*.docx
