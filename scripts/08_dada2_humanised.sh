@@ -15,6 +15,9 @@
 # Sensitivity arm:
 #   TRUNC_F=200 TRUNC_R=150 TAG=trunc200_150 bash scripts/08_dada2_humanised.sh
 # DRY_RUN=1 prints the commands without running them.
+# Each step is logged with its start time; DADA2 runs with --verbose so its own
+# progress (error learning, per-sample denoising) appears in the log.
+# Check progress with:  bash scripts/status.sh
 # Outputs: data/qiime/dada2/<TAG>/ (artifacts), results/dada2/<TAG>/ (qzv, TSV).
 set -euo pipefail
 
@@ -28,7 +31,7 @@ mkdir -p "$Q" "$R"
 exec 9>"$Q/.dada2.lock"
 flock -n 9 || { echo "Another DADA2 run is using $Q; exiting."; exit 1; }
 
-run_cmd() { echo "+ $*"; [[ "${DRY_RUN:-0}" == "1" ]] || "$@"; }
+run_cmd() { echo "+ [$(date +%H:%M:%S)] $*"; [[ "${DRY_RUN:-0}" == "1" ]] || "$@"; }
 if [[ "${DRY_RUN:-0}" != "1" ]]; then
   command -v qiime >/dev/null || { echo "qiime not found: conda activate rachis-qiime2-2026.10"; exit 1; }
 fi
@@ -65,7 +68,8 @@ for run in hum_run1 hum_run2 hum_run3; do
     --o-table "$Q/${run}_table.qza" \
     --o-representative-sequences "$Q/${run}_repseqs.qza" \
     --o-denoising-stats "$Q/${run}_stats.qza" \
-    --o-base-transition-stats "$Q/${run}_base_transition_stats.qza"
+    --o-base-transition-stats "$Q/${run}_base_transition_stats.qza" \
+    --verbose
 
   run_cmd qiime tools export --input-path "$Q/${run}_stats.qza" --output-path "$R/${run}_stats"
   run_cmd rm -f "$Q/${run}_demux_filtered.qza"
@@ -78,10 +82,13 @@ run_cmd qiime feature-table merge \
 run_cmd qiime feature-table merge-seqs \
   --i-data "$Q/hum_run1_repseqs.qza" "$Q/hum_run2_repseqs.qza" "$Q/hum_run3_repseqs.qza" \
   --o-merged-data "$Q/humanised_repseqs.qza"
+# 2026.10: summarize is a pipeline with three outputs and --m-metadata-file
 run_cmd qiime feature-table summarize \
   --i-table "$Q/humanised_table.qza" \
-  --m-sample-metadata-file metadata/humanised_sample_metadata.tsv \
-  --o-visualization "$R/humanised_table.qzv"
+  --m-metadata-file metadata/humanised_sample_metadata.tsv \
+  --o-feature-frequencies "$Q/humanised_feature_frequencies.qza" \
+  --o-sample-frequencies "$Q/humanised_sample_frequencies.qza" \
+  --o-summary "$R/humanised_table.qzv"
 
 # plain-text copies for the retention check (09) and later comparisons
 run_cmd qiime tools export --input-path "$Q/humanised_table.qza" --output-path "$R/table_export"
