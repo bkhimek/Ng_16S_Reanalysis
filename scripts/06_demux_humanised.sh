@@ -13,6 +13,7 @@
 #   5. export the error-correction details to TSV for the assignment check.
 # Runs are processed separately because barcodes are reused between runs.
 # A run whose outputs already exist is skipped (re-runnable after a failure).
+# A lock file stops a second copy from running at the same time.
 # DRY_RUN=1 prints the commands without running them.
 # RAW, QDIR, RESDIR override the input/output folders (used for the smoke test).
 #
@@ -25,6 +26,10 @@ RAW="${RAW:-data/raw/humanised}"     # override for the smoke test
 Q="${QDIR:-data/qiime/demux}"
 R="${RESDIR:-results/demux}"
 mkdir -p "$Q" "$R"
+
+# refuse to start if another copy is already running (same output folder)
+exec 9>"$Q/.demux.lock"
+flock -n 9 || { echo "Another demultiplexing run is using $Q; exiting."; exit 1; }
 
 run_cmd() { echo "+ $*"; [[ "${DRY_RUN:-0}" == "1" ]] || "$@"; }
 
