@@ -1,0 +1,2 @@
+name	release	source	file	bytes	md5	doi	primers	trained_with	signature	signing_key_fingerprint	recorded
+SILVA SSU Ref NR99 uniform classifier V4-515f-806r	144	https://www.arb-silva.de/fileadmin/silva_databases/current/QIIME2/2026.7/SSU/V4-515f-806r/uniform	SILVA_144_SSURef_NR99_uniform_classifier_V4-515f-806r.qza	79326205	683a71dcd81ce90d724add22d2ad4d0f	10.82364/144/SSU/Ref-NR99/QIIME2/2026.7/V4-515f-806r/uniform	GTGYCAGCMGCCGCGGTAA/GGACTACNVGGGTWTCTAAT	QIIME 2 2026.7.0	verified	01877A6A3933ED067EA5B8C3F3A26EDEDB5A4596	2026-11-13
