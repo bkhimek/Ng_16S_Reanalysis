@@ -8,8 +8,8 @@ Per arm, read-weighted over all samples together (no diet or time contrast):
      carries its family name down into the genus slot. A "genus" equal to the
      family name, or labelled uncultured/unidentified, is therefore counted
      separately as NOT resolved to genus.
-  3. Non-target reads: mitochondria (f__Mitochondria) and chloroplast
-     (o__Chloroplast), which are host/plant organelle 16S, not gut bacteria.
+  3. Non-target reads: mitochondria and chloroplast (matched at any rank),
+     which are host/plant organelle 16S, not gut bacteria.
   4. The 12 most abundant families overall (sanity check that the profile
      looks like mouse gut, e.g. Muribaculaceae = the paper's S24-7), and the
      median classification confidence.
@@ -24,9 +24,10 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-RANKS = ["d", "p", "c", "o", "f", "g"]
-NAMES = {"d": "domain", "p": "phylum", "c": "class", "o": "order", "f": "family", "g": "genus"}
-VAGUE = ("uncultured", "unidentified", "unknown", "metagenome", "incertae")
+RANKS = ["d", "k", "p", "c", "o", "f", "g"]   # SILVA 144 adds a kingdom rank (k__)
+NAMES = {"d": "domain", "k": "kingdom", "p": "phylum", "c": "class", "o": "order", "f": "family", "g": "genus"}
+# labels that do not resolve a rank: placeholders, and SILVA 144 "--other" groups
+VAGUE = ("uncultured", "unidentified", "unknown", "metagenome", "incertae", "--other")
 
 
 def parse(taxon):
@@ -82,15 +83,20 @@ def check(arm):
         g, f = p.get("g", ""), p.get("f", "")
         if g and g != f and not any(v in g.lower() for v in VAGUE):
             genus_strict += n
-        if f == "Mitochondria":
+        tl = t.lower()   # match at any rank: label placement may differ between SILVA releases
+        if "mitochondri" in tl:
             mito += n
-        if p.get("o") == "Chloroplast":
+        if "chloroplast" in tl:
             chloro += n
         fam[f or f"(no family: {p.get('o', p.get('p', p.get('d', 'Unassigned')))})"] += n
     rep.append("1. Domain: " + ", ".join(f"{k} {v/total:.4f}" for k, v in dom.most_common()))
     rep.append("2. Reads named at rank: " + ", ".join(f"{NAMES[r]} {rank_named[r]/total:.4f}" for r in RANKS[1:]))
-    rep.append(f"   genus, strict (not a propagated family name, not uncultured/unidentified): {genus_strict/total:.4f}")
+    rep.append(f"   genus, strict (not a propagated family name, not uncultured/unidentified/Incertae_Sedis/--other): {genus_strict/total:.4f}")
     rep.append(f"3. Mitochondria {mito/total:.5f}; chloroplast {chloro/total:.5f}")
+    phy = Counter()
+    for a, n in reads.items():
+        phy[parse(tax.get(a, ("Unassigned", 0.0))[0]).get("p", "(no phylum)")] += n
+    rep.append("   phyla (SILVA 144 names): " + ", ".join(f"{k} {v/total:.4f}" for k, v in phy.most_common(8)))
     rep.append("4. Most abundant families (share of reads):")
     for k, v in fam.most_common(12):
         rep.append(f"     {v/total:.4f}  {k}")
