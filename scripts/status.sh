@@ -8,7 +8,7 @@ set -uo pipefail
 log="${1:-$(ls -t results/*.out results/*/*.out data/raw/*.out 2>/dev/null | head -1)}"
 [[ -n "$log" && -f "$log" ]] || { echo "No log file found."; exit 1; }
 
-procs=$(pgrep -af "scripts/0[0-9]_|qiime |R --(no-echo|slave)|Rscript|run_dada" | grep -v "status.sh" || true)
+procs=$(pgrep -af "scripts/[0-9][0-9]_|qiime |R --(no-echo|slave)|Rscript|run_dada" | grep -v "status.sh" || true)
 age=$(( $(date +%s) - $(stat -c %Y "$log") ))
 last_step=$(grep -E "^(\+ |=== |DADA2 arm)" "$log" | tail -1 | cut -c1-140)
 errors=$(grep -nE "Traceback|^Error|Plugin error|There were some problems|No such option|FAILED|Killed|MemoryError|No space left" "$log" | tail -3)
