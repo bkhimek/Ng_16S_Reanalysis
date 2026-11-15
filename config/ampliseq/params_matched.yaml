@@ -1,0 +1,32 @@
+# config/ampliseq/params_matched.yaml - nf-core/ampliseq 3.1.0 parameters for the
+# matched Stage 2 run (D30). Used with: -params-file config/ampliseq/params_matched.yaml
+# See docs/STAGE2_PARAMETER_MATCH.md for the source of every value.
+input: config/ampliseq/samplesheet.tsv      # written by scripts/21_fastq_manifest.py
+outdir: results/ampliseq
+
+# reads: primers are not in the reads (D14); identical per-sample FASTQs (D9)
+skip_cutadapt: true
+
+# DADA2 filtering, as Stage 1 primary arm 200/150 (D20a)
+trunclenf: 200
+trunclenr: 150
+truncq: 2
+max_ee: 2
+max_ee_r: 2
+
+# DADA2 inference and merging, as Stage 1 (3.x default is pooled: overridden)
+sample_inference: independent
+mergepairs_strategy: merge
+
+# no post-DADA2 filtering (Stage 1 applied none)
+exclude_taxa: none
+min_frequency: 1
+min_samples: 1
+
+# taxonomy: ampliseq default DADA2 classifier kept and recorded separately (D24);
+# the comparison classifies ampliseq ASVs with the SILVA 144 classifier in QIIME 2
+skip_dada_addspecies: true
+
+# downstream analysis is done by the project scripts, not by ampliseq
+skip_qiime: true
+skip_barrnap: true
