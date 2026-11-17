@@ -8,7 +8,7 @@ A prespecified reanalysis of the 16S rRNA V4 data from **Ng et al. 2019**, *Reco
 | 2 | Reproducibility check: the same reads through a matched second workflow | nf-core/ampliseq 3.1.0 (Nextflow, Docker) |
 | 3 | Interpretation and report | [Project report](docs/Ng_16S_Reanalysis_Project_Report.md) |
 
-**Status:** humanised experiment complete. The conventional-mouse experiment is on hold (see [decisions](docs/DECISIONS.md), D4 and D15).
+**Status:** complete. The project covers the humanised-mouse experiment through all three stages. The conventional-mouse experiment in the same deposit was closed after a feasibility assessment: unresolved animal-identity conflicts and unverified cohort relationships ([decisions](docs/DECISIONS.md), D33).
 
 ## Main findings
 
@@ -65,7 +65,7 @@ See [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md) for exact versions and build co
 | 14–16 | Tree; rarefaction-depth check; q2-boots core metrics (6,400 reads, n = 100, seed 20261113) | QIIME 2 |
 | 17 | Freeze check: sample list and artifact checksums | Python 3 |
 | 18–19 | Frozen primary, sensitivity and secondary analyses | QIIME 2 (numpy, matplotlib) |
-| 20, 26 | Exploratory analyses | QIIME 2 (numpy, matplotlib) |
+| 20, 26, 28 | Exploratory analyses | QIIME 2 (numpy, matplotlib) |
 | 21–25 | Stage 2: per-sample FASTQ export, ampliseq run and checks, Stage 1 downstream on ampliseq output, comparison | QIIME 2, Docker, Nextflow |
 | 27 | Report figures | QIIME 2 (matplotlib) |
 

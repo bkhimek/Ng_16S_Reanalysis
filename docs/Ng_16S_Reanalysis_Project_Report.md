@@ -44,7 +44,7 @@ Eligible mice are those with a day-0 faecal sample and a sample on each of days 
 2. Reproducibility check with nf-core/ampliseq.
 3. Interpretation (this report).
 
-The conventional-mouse experiment is on hold (D4, D15).
+The conventional-mouse experiment was closed after a feasibility assessment (D33): unresolved animal-identity conflicts and unverified cohort relationships prevent reliable reconstruction of individual recovery trajectories.
 
 ## 2. Processing (Stage 1)
 
@@ -150,7 +150,15 @@ These contrasts barely change with truncation: richness −15.5 against −14.6,
 
 ![Figure 3](figures/fig3_window_pcoa.png)
 
-*Figure 3 (exploratory). PCoA of window samples (rarefied Bray–Curtis, 200/150), coloured by diet, marker by cage. Axis 1 (42% of variation) separates the diets. The PD samples also form two groups along axis 2, each containing both PD cages; this structure was not investigated (time within the window is one candidate).*
+*Figure 3 (exploratory). PCoA of window samples (rarefied Bray–Curtis, 200/150), coloured by diet, marker by cage. Axis 1 (42% of variation) separates the diets. The PD samples also form two groups along axis 2, each containing both PD cages; they follow sampling day (see below).*
+
+**What the PD split in Figure 3 reflects (exploratory, D34).** The two PD groups follow time within the window, not mouse or cage:
+
+- The lower group holds 6 of the 7 day-8 samples and 3 of the 7 day-9 samples, and none from days 10–12.
+- Every PD mouse except H_m20 has one or two early samples in it.
+- Read depth is similar in both groups (median 13,562 against 12,852 final reads). The original sample IDs are lower in the early group, but they follow collection order, so they mirror the day difference.
+
+The groups differ mainly in two genera. One Akkermansia ASV is nearly absent from the early samples (0.1% of reads, against 31.7% later). Bacteroides dominates them (Bacteroidaceae 80.7% against 48.1%). In PD mice, the start of the window is therefore still a Bacteroides-dominated community. Akkermansia, at about 25% of reads on day 0, returns at a mouse-specific time between days 8 and 10.
 
 **Family contributions to the unrarefied Bray–Curtis contrast.** For a pair of samples, the unrarefied Bray–Curtis distance is half the sum of absolute changes in relative abundance, so it splits exactly into one part per family. Averaged like S2:
 
@@ -225,7 +233,7 @@ The distance endpoint therefore neither supports nor contradicts the paper's con
 2. **Cohort comparability.** The paper compares the MD mice with the STD mice of its Figure 1, and concurrent treatment could not be verified. Here, STD and PD mice carry different dominant Muribaculaceae ASVs, consistent with different colonisation histories. Whether the PD day −14 sample precedes the diet switch is unconfirmed.
 3. **Replication.** There are five cages (three STD, two PD), mouse values overlap between diets, and no p-values are reported. Consistency across cages, measures and processing choices is the evidence offered.
 4. **Controls.** No extraction blanks or mock communities were documented in the materials reviewed, so contamination and cross-talk cannot be measured directly.
-5. **Scope.** One human donor, humanised mice only, one antibiotic; the conventional-mouse experiment is not analysed.
+5. **Scope.** One human donor, humanised mice only, one antibiotic; the conventional-mouse experiment was not analysed (D33).
 
 **Conclusion.** During days 8–12 after ciprofloxacin began, the two low-MAC cages were closer to their own day-0 faecal community composition by Bray–Curtis than all three standard-diet cages. They also had lower observed ASV richness in that same-run window. The cage pattern held across the tested Bray–Curtis specifications and in the matched nf-core/ampliseq workflow. Weighted UniFrac and Aitchison distance gave overlapping cage values. Baseline sequencing run differed by diet, and concurrent treatment could not be verified, so the reanalysis cannot establish a diet effect on recovery.
 
@@ -253,9 +261,9 @@ The distance endpoint therefore neither supports nor contradicts the paper's con
 | 17–19 | Freeze check; primary and sensitivity analyses; secondary measures |
 | 20 | Exploratory window analysis and family decomposition |
 | 21–25 | Stage 2: FASTQ export; ampliseq run and checks; downstream; comparison |
-| 26–27 | Exploratory checks (trace origin, workflow differences); report figures |
+| 26–28 | Exploratory checks (trace origin, workflow differences, PCoA split); report figures |
 
-Every analytical decision and amendment is listed in the [decision table](DECISIONS.md). Data sources and sample sets are described in [DATA_AND_SAMPLES.md](DATA_AND_SAMPLES.md), and software versions in [ENVIRONMENT.md](ENVIRONMENT.md).
+Every analytical decision and amendment (D1–D34) is listed in the [decision table](DECISIONS.md). Data sources and sample sets are described in [DATA_AND_SAMPLES.md](DATA_AND_SAMPLES.md), and software versions in [ENVIRONMENT.md](ENVIRONMENT.md).
 
 ## References
 
