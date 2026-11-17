@@ -1,0 +1,7 @@
+sample	fastq_1	fastq_2	run
+H2822	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2822_47_L001_R1_001.fastq.gz	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2822_47_L001_R2_001.fastq.gz	hum_run2
+H2823	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2823_284_L001_R1_001.fastq.gz	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2823_284_L001_R2_001.fastq.gz	hum_run2
+H2824	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2824_83_L001_R1_001.fastq.gz	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2824_83_L001_R2_001.fastq.gz	hum_run2
+H2825	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2825_198_L001_R1_001.fastq.gz	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2825_198_L001_R2_001.fastq.gz	hum_run2
+H2826	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2826_89_L001_R1_001.fastq.gz	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2826_89_L001_R2_001.fastq.gz	hum_run2
+H2827	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2827_345_L001_R1_001.fastq.gz	/home/himek/projects/Ng_16S_Reanalysis/data/fastq_per_sample/hum_run2/H2827_345_L001_R2_001.fastq.gz	hum_run2
