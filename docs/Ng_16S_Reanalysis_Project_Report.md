@@ -255,7 +255,7 @@ The distance endpoint therefore neither supports nor contradicts the paper's con
 | 21–25 | Stage 2: FASTQ export; ampliseq run and checks; downstream; comparison |
 | 26–27 | Exploratory checks (trace origin, workflow differences); report figures |
 
-The decision table (D1–D32) is kept with the project working documents and is published with the end-of-project documentation (D11).
+Every analytical decision and amendment is listed in the [decision table](DECISIONS.md). Data sources and sample sets are described in [DATA_AND_SAMPLES.md](DATA_AND_SAMPLES.md), and software versions in [ENVIRONMENT.md](ENVIRONMENT.md).
 
 ## References
 

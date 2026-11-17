@@ -5,6 +5,15 @@
 - **Stage 1:** q2-dada2 2026.10.0, `q2_dada2/assets/run_dada.R` (tag `2026.10.0`), called by `scripts/08_dada2_humanised.sh`.
 - **Stage 2:** nf-core/ampliseq 3.1.0, commit `b9bd579c0480ee23ecf24655f51c0c67777cd6b3` (28 Oct 2026). Files read: `conf/modules.config`, `nextflow_schema.json` and `modules/local/dada2_*`.
 
+> **Amendment, 17 November 2026.** The QIIME 2 2026.10 environment used for Stage 1 pins q2-dada2 **2026.10.1** (environment file in `config/`), not 2026.10.0. In 2026.10.1 the R script `run_dada.R` was replaced by a Python module (`q2_dada2/_run_dada.py`, tag `2026.10.1`) that calls the same DADA2 functions. That module was read on 17 November. Every call matched in the table below is the same in 2026.10.1:
+> - `filterAndTrim`: truncLen, trimLeft, maxEE and truncQ as set; `rm_phix = TRUE`; maxN at its default 0;
+> - `learnErrors`: `nreads = 1e6`, other arguments at DADA2 defaults;
+> - `dada`: `pool = FALSE` for independent inference;
+> - `mergePairs`: minOverlap, maxMismatch, trimOverhang and returnRejects as set;
+> - `removeBimeraDenovo`: consensus, `minFoldParentOverAbundance = 1`, `allowOneOff = FALSE`.
+>
+> One detail differs from the original note on error learning. In 2026.10.1 the sample order passed to `learnErrors` follows the sample manifest, not an alphabetical file listing. This affects only residual difference 2 below. The matching, the Stage 2 run and its results are unchanged.
+
 **Overrides:** matching settings go in `config/ampliseq/params_matched.yaml` (parameters) and `config/ampliseq/matched.config` (module arguments).
 
 ## DADA2 and surrounding steps
